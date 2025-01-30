@@ -4,27 +4,27 @@ This repository contains SQL scripts to perform various operations on a Persons 
 
 ## Features
 
-Add DOB Column: Adds a new DOB column to the Persons table.
+* Add DOB Column: Adds a new DOB column to the Persons table.
 
-Calculate Age Function: A user-defined function CalculateAge() to compute age from the date of birth.
+* Calculate Age Function: A user-defined function CalculateAge() to compute age from the date of birth.
 
-Fetch Age of Persons: A SELECT query to retrieve the age of all persons using the function.
+* Fetch Age of Persons: A SELECT query to retrieve the age of all persons using the function.
 
-String Operations on Country Names:
+* String Operations on Country Names:
 
-Find the length of each country name.
+* Find the length of each country name.
 
-Extract the first three characters of each country name.
+* Extract the first three characters of each country name.
 
-Convert country names to uppercase and lowercase.
+* Convert country names to uppercase and lowercase.
 
 ## Usage
 
-To execute these queries, run them in a MySQL environment.
+* To execute these queries, run them in a MySQL environment.
 
-Run each query sequentially.
+* Run each query sequentially.
 
-Observe the results for data transformations.
+* Observe the results for data transformations.
 
 ## SQL Scripts
 
