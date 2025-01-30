@@ -1,0 +1,107 @@
+-- SQL ASSIGNMENT 7- (FUNCTION)
+USE ENTRICLASSES;
+
+-- Create and populate the COUNTRY2 table
+CREATE TABLE COUNTRY(
+    ID INT PRIMARY KEY,
+    COUNTRY_NAME VARCHAR(50),
+    POPULATION INT,
+    AREA FLOAT
+);
+
+INSERT INTO COUNTRY(ID, COUNTRY_NAME, POPULATION, AREA)
+VALUES 
+(1, 'USA', 331000000, 9834000),
+(2, 'India', 1400000000, 3287000),
+(3, 'China', 1440000000, 9597000),
+(4, 'Brazil', 213000000, 8516000),
+(5, 'Russia', 146000000, 17098200),
+(6, 'Japan', 126000000, 377975),
+(7, 'Germany', 83000000, 357386),
+(8, 'UK', 67000000, 242495),
+(9, 'France', 67000000, 551695),
+(10, 'Australia', 25600000, 7692024);
+
+
+
+SELECT * FROM COUNTRY;
+
+-- Create and populate the PERSONS table
+CREATE TABLE PERSONS(
+    ID INT PRIMARY KEY,
+    F_NAME VARCHAR(50),
+    L_NAME VARCHAR(50),
+    POPULATION INT,
+    RATING FLOAT,
+    COUNTRY_ID INT,
+    COUNTRY_NAME VARCHAR(50),
+    FOREIGN KEY (COUNTRY_ID) REFERENCES COUNTRY(ID)
+);
+
+INSERT INTO PERSONS(ID, F_NAME, L_NAME, POPULATION, RATING, COUNTRY_ID, COUNTRY_NAME)
+VALUES
+(1, 'John', 'Doe', 5000, 4.5, 1, 'USA'),
+(2, 'Jane', 'Smith', 6000, 4.7, 1, 'USA'),
+(3, 'Raj', 'Kumar', 7000, 4.9, 2, 'India'),
+(4, 'Wei', 'Zhang', 5500, 4.6, 3, 'China'),
+(5, 'Ana', 'Silva', 5000, 4.8, 4, 'Brazil'),
+(6, 'Olga', 'Ivanova', 3000, 4.3, 5, 'Russia'),
+(7, 'Taro', 'Yamamoto', 2000, 4.4, 6, 'Japan'),
+(8, 'Hans', 'Müller', 2500, 4.2, 7, 'Germany'),
+(9, 'Emma', 'Brown', 4000, 4.5, 8, 'UK'),
+(10, 'Jean', 'Dupont', 3000, 4.1, 9, 'France');
+
+SELECT * FROM PERSONS;
+
+-- 1. Add a new column called DOB in Persons table with data type as Date.
+
+ALTER TABLE PERSONS ADD COLUMN DOB DATE;
+DESC  PERSONS;
+
+-- 2. Write a user-defined function to calculate age using DOB.
+
+UPDATE PERSONS SET DOB='1998-02-02' WHERE ID=1;
+UPDATE PERSONS SET DOB='2000-04-05' WHERE ID=2;
+UPDATE PERSONS SET DOB='1999-04-05' WHERE ID=3;
+UPDATE PERSONS SET DOB='2001-07-05' WHERE ID=4;
+UPDATE PERSONS SET DOB='2006-08-08' WHERE ID=5;
+UPDATE PERSONS SET DOB='2001-06-09' WHERE ID=6;
+UPDATE PERSONS SET DOB='1994-07-11' WHERE ID=7;
+UPDATE PERSONS SET DOB='2000-12-05' WHERE ID=8;
+UPDATE PERSONS SET DOB='2005-9-10' WHERE ID=9;
+UPDATE PERSONS SET DOB='1996-05-03' WHERE ID=10;
+
+SELECT * FROM PERSONS;
+
+DELIMITER //
+CREATE FUNCTION CalculateAge(dob DATE) RETURNS INT DETERMINISTIC
+BEGIN
+    DECLARE age INT;
+    SET age = TIMESTAMPDIFF(YEAR, dob, CURDATE());
+    RETURN age;
+END //
+DELIMITER ;
+
+SHOW FUNCTION STATUS WHERE NAME='CALCULATEAGE';
+
+## 3. Write a select query to fetch the Age of all persons using the function that has been created.
+
+SELECT ID,F_NAME,DOB,CALCULATEAGE(DOB) AS AGE FROM PERSONS;
+
+-- 4. Find the length of each country name in the Country table.
+
+SELECT ID,COUNTRY_NAME,LENGTH(COUNTRY_NAME) AS "COUNTRY-NAME LENGTH" FROM COUNTRY;
+
+-- 5. Extract the first three characters of each country's name in the Country table.
+
+SELECT ID,COUNTRY_NAME,LEFT(COUNTRY_NAME,3) AS "FIRST 3 CHARACTERS OF COUNTRY-NAME" FROM COUNTRY;
+
+-- 6. Convert all country names to uppercase and lowercase in the Country table.
+
+SELECT ID,COUNTRY_NAME,UPPER(COUNTRY_NAME) AS "COUNTRY-NAME IN UPPERCASE",LOWER(COUNTRY_NAME) AS "COUNTRY-NAME IN LOWER CASE" FROM COUNTRY;
+
+
+
+
+
+
